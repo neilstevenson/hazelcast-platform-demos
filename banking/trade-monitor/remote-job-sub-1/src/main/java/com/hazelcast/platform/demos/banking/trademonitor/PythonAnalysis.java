@@ -38,7 +38,7 @@ import com.hazelcast.jet.python.PythonTransforms;
  *                         |
  *                         |
  *                +------( 2 )------+
- *                |  Reformat Key   |
+ *                |  Call Python    |
  *                +-----------------+
  *                         |
  *                         |

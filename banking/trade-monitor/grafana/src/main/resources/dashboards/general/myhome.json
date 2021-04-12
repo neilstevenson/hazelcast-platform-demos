@@ -65,18 +65,10 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(hz_map_putCount{name=\"python_sentiment\"})",
+          "expr": "sum(rate(hz_map_putCount{name=\"python_sentiment\"}[7m]))",
           "interval": "",
-          "legendFormat": "TOTAL",
+          "legendFormat": "WRITE RATE",
           "refId": "A"
-        },
-        {
-          "exemplar": true,
-          "expr": "hz_map_putCount{name=\"python_sentiment\"}",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "B"
         }
       ],
       "thresholds": [],
