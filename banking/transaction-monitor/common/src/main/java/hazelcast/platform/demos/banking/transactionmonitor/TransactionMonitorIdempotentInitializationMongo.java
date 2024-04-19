@@ -40,8 +40,12 @@ public class TransactionMonitorIdempotentInitializationMongo {
      * </p>
      */
     static boolean defineMongo(HazelcastInstance hazelcastInstance, Properties properties,
-            TransactionMonitorFlavor transactionMonitorFlavor) {
-
+            TransactionMonitorFlavor transactionMonitorFlavor, boolean useHzCloud) {
+        //TODO April 2024
+        if (useHzCloud) {
+            LOGGER.info("Not currently available on HZ Cloud");
+            return true;
+        }
         try {
             String uri = MyUtils.buildMongoURI(properties);
             String database = "transaction-monitor-" + transactionMonitorFlavor.toString().toLowerCase(Locale.ROOT);

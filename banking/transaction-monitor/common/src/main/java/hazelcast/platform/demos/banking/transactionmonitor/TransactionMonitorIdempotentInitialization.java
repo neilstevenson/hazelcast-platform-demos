@@ -190,7 +190,8 @@ public class TransactionMonitorIdempotentInitialization {
 
         // Generic config, MapStore implementation is derived
         if (!existingIMapNames.contains(MyConstants.IMAP_NAME_MYSQL_SLF4J)) {
-            TransactionMonitorIdempotentInitializationMySql.defineMySql(hazelcastInstance, properties, transactionMonitorFlavor);
+            TransactionMonitorIdempotentInitializationMySql.defineMySql(hazelcastInstance, properties,
+                    transactionMonitorFlavor, useHzCloud);
 
             MapConfig mySqlMapConfig = new MapConfig(MyConstants.IMAP_NAME_MYSQL_SLF4J);
 
@@ -200,7 +201,8 @@ public class TransactionMonitorIdempotentInitialization {
             .setInitialLoadMode(MapStoreConfig.InitialLoadMode.EAGER)
             .setClassName(GenericMapStore.class.getName()).setProperties(mySqlProperties);
 
-            if (localhost) {
+            //TODO April 2024 - No useHzCloud
+            if (localhost || useHzCloud) {
                 LOGGER.info("localhost=={}, no map store for MySql", localhost);
             } else {
                 mySqlMapConfig.setMapStoreConfig(mySqlStoreConfig);
@@ -494,11 +496,11 @@ public class TransactionMonitorIdempotentInitialization {
         ok &= defineKafka2(hazelcastInstance, bootstrapServers);
         if (!isLocalhost) {
             ok &= TransactionMonitorIdempotentInitializationCassandra.defineCassandra(hazelcastInstance,
-                    properties, transactionMonitorFlavor);
+                    properties, transactionMonitorFlavor, useHzCloud);
             ok &= TransactionMonitorIdempotentInitializationMaria.defineMaria(hazelcastInstance,
-                    properties, transactionMonitorFlavor, isKubernetes);
+                    properties, transactionMonitorFlavor, isKubernetes, useHzCloud);
             ok &= TransactionMonitorIdempotentInitializationMongo.defineMongo(hazelcastInstance,
-                    properties, transactionMonitorFlavor);
+                    properties, transactionMonitorFlavor, useHzCloud);
         }
         ok &= TransactionMonitorIdempotentInitializationAdmin.defineAdminIMaps(hazelcastInstance, useHzCloud);
         ok &= defineWANIMaps(hazelcastInstance, transactionMonitorFlavor);

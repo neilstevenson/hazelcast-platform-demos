@@ -39,7 +39,12 @@ public class TransactionMonitorIdempotentInitializationMySql {
      * </p>
      */
     static boolean defineMySql(HazelcastInstance hazelcastInstance, Properties properties,
-            TransactionMonitorFlavor transactionMonitorFlavor) {
+            TransactionMonitorFlavor transactionMonitorFlavor, boolean useHzCloud) {
+        //TODO April 2024
+        if (useHzCloud) {
+            LOGGER.info("Not currently available on HZ Cloud");
+            return true;
+        }
         try {
             String address = System.getProperty(MyConstants.MYSQL_ADDRESS);
             String database = "transaction-monitor-" + transactionMonitorFlavor.toString().toLowerCase(Locale.ROOT);

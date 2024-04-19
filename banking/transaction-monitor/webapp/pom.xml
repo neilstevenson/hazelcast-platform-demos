@@ -111,16 +111,34 @@
 			<!-- Copy keystore/truststore if found -->
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<configuration>
+                                <executions>
+                                    <execution>
+                                        <phase>package</phase>
+                                        <id>one</id>
+                                        <goals>
+                                            <goal>run</goal>
+                                        </goals>
+				        <configuration>
 					<target>
 						<ant antfile="../../../ant/build.xml" target="conditionalcopy"/>
 					</target>
+				        </configuration>
+                                    </execution>
+                                    <execution>
+                                        <phase>package</phase>
+                                        <id>two</id>
+                                        <goals>
+                                            <goal>run</goal>
+                                        </goals>
+				        <configuration>
                     <target name="Copy ${my.docker.jar.file1} ${my.docker.jar.file2} ${my.docker.jar.file3}">
                     	<copy file="../jar-namespace-1/target/${my.docker.jar.file1}" todir="${project.build.directory}"/>
                     	<copy file="../jar-namespace-2/target/${my.docker.jar.file2}" todir="${project.build.directory}"/>
                     	<copy file="../jar-namespace-3/target/${my.docker.jar.file3}" todir="${project.build.directory}"/>
                     </target>
-				</configuration>
+				        </configuration>
+                                    </execution>
+                                </executions>
 			</plugin>
 			<plugin>
 				<groupId>com.github.eirslett</groupId>

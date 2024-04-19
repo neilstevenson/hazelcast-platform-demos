@@ -39,7 +39,12 @@ public class TransactionMonitorIdempotentInitializationMaria {
      * </p>
      */
     static boolean defineMaria(HazelcastInstance hazelcastInstance, Properties properties,
-            TransactionMonitorFlavor transactionMonitorFlavor, boolean isKubernetes) {
+            TransactionMonitorFlavor transactionMonitorFlavor, boolean isKubernetes, boolean useHzCloud) {
+        //TODO April 2024
+        if (useHzCloud) {
+            LOGGER.info("Not currently available on HZ Cloud");
+            return true;
+        }
         try {
             String database = "transaction-monitor-" + transactionMonitorFlavor.toString().toLowerCase(Locale.ROOT);
             String uri = MyUtils.buildMariaURI(properties, database, isKubernetes);
