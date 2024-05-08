@@ -179,7 +179,7 @@ public class TransactionMonitorIdempotentInitialization {
 
             hazelcastInstance.getConfig().addMapConfig(alertsMapConfig);
         } else {
-            LOGGER.info("Don't add journal to '{}', map already exists", MyConstants.IMAP_NAME_ALERTS_LOG);
+            LOGGER.error("Don't add journal to '{}', map already exists", MyConstants.IMAP_NAME_ALERTS_LOG);
             if (useHzCloud) {
                 deleteForRetry(hazelcastInstance, useHzCloud, MyConstants.IMAP_NAME_ALERTS_LOG);
                 ok = false;
@@ -211,7 +211,7 @@ public class TransactionMonitorIdempotentInitialization {
 
             hazelcastInstance.getConfig().addMapConfig(mySqlMapConfig);
         } else {
-            LOGGER.info("Don't add generic mapstore to '{}', map already exists", MyConstants.IMAP_NAME_MYSQL_SLF4J);
+            LOGGER.error("Don't add generic mapstore to '{}', map already exists", MyConstants.IMAP_NAME_MYSQL_SLF4J);
             if (useHzCloud) {
                 deleteForRetry(hazelcastInstance, useHzCloud, MyConstants.IMAP_NAME_MYSQL_SLF4J);
                 ok = false;
@@ -250,7 +250,7 @@ public class TransactionMonitorIdempotentInitialization {
                 hazelcastInstance.getConfig()
                 .addMapConfig(new MapConfig(mapName).setEventJournalConfig(eventJournalConfig));
             } else {
-                LOGGER.info("Don't add journal to '{}', map already exists", mapName);
+                LOGGER.error("Don't add journal to '{}', map already exists", mapName);
                 if (useHzCloud) {
                     deleteForRetry(hazelcastInstance, useHzCloud, mapName);
                 }
@@ -307,7 +307,7 @@ public class TransactionMonitorIdempotentInitialization {
             // Void method, hence returning true
             transactionsMap.addIndex(indexConfig);
         } else {
-            LOGGER.trace("Don't add index to '{}', map already exists", MyConstants.IMAP_NAME_TRANSACTIONS);
+            LOGGER.error("Don't add index to '{}', map already exists", MyConstants.IMAP_NAME_TRANSACTIONS);
             if (useHzCloud) {
                 deleteForRetry(hazelcastInstance, useHzCloud, MyConstants.IMAP_NAME_TRANSACTIONS);
             }
